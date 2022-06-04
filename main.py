@@ -27,6 +27,7 @@ def enhance(path, res):
     init_res = img.size[0]
     new_dir("output")
     shutil.copy(path, f"output/original-{img.size[0]}.jpg")
+    Image.open(path).resize((res, res)).save(f"output/resized-{res}.jpg")
 
     while img.size[0]*2 <= res:
         arr = np.array(img)
@@ -60,9 +61,9 @@ def enhance(path, res):
                     arr[i, j],arr[i, j],arr[i, j],arr[i, j],
                 ), axis=0)
 
-        img = ImageEnhance.Color(Image.fromarray(new_arr)).enhance(1.02)
-        img = ImageEnhance.Contrast(img).enhance(1.02)
-        img = ImageEnhance.Brightness(img).enhance(1.05)
+        img = ImageEnhance.Color(Image.fromarray(new_arr)).enhance(1.01)
+        img = ImageEnhance.Contrast(img).enhance(1.01)
+        img = ImageEnhance.Brightness(img).enhance(1.02)
 
     Image.fromarray(new_arr).save(f"output/{init_res}-{img.size[0]}.jpg")
 
