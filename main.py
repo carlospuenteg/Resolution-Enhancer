@@ -1,5 +1,5 @@
 import numpy as np
-from PIL import Image, ImageEnhance
+from PIL import Image
 import os
 import shutil
 import time
@@ -61,13 +61,11 @@ def enhance(path, res):
                     arr[i, j],arr[i, j],arr[i, j],arr[i, j],
                 ), axis=0)
 
-        img = ImageEnhance.Color(Image.fromarray(new_arr)).enhance(1.01)
-        img = ImageEnhance.Contrast(img).enhance(1.01)
-        img = ImageEnhance.Brightness(img).enhance(1.02)
+        img = Image.fromarray(new_arr)
 
     Image.fromarray(new_arr).save(f"output/{init_res}-{img.size[0]}.jpg")
 
 #-------------------------------------------------------------------------------
 startTime = time.time()
-enhance("tests/img1/64.jpg", 2048)
+enhance("tests/img2/32.jpg", 4096)
 print(f'Done in: {round(time.time() - startTime,4)}s')
