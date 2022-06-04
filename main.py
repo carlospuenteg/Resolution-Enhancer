@@ -2,6 +2,7 @@ import numpy as np
 from PIL import Image
 import os
 import shutil
+import time
 
 def new_dir(dir):
     if os.path.exists(dir):
@@ -78,43 +79,42 @@ def cool_error(path, res):
         max_j = arr.shape[1]-1
         for i in range(arr.shape[0]):
             for j in range(arr.shape[1]):
-
-                temp_arr = np.sum((
+                new_arr[i*2, j*2] = np.average((
                     arr[i-(i>0),j-(j>0)],
                     arr[i, j-(j>0)],
                     arr[i-(i>0), j],
-                    arr[i, j]*4
+                    arr[i, j],arr[i, j],arr[i, j],arr[i, j],
                 ), axis=0)
-                new_arr[i*2, j*2] = temp_arr/len(temp_arr)
-
-                temp_arr = np.sum((
+                new_arr[i*2+1, j*2] = np.average((
                     arr[i+(i<max_i), j-(j>0)],
                     arr[i, j-(j>0)],
                     arr[i+(i<max_i), j],
-                    arr[i, j]*4
+                    arr[i, j],arr[i, j],arr[i, j],arr[i, j],
                 ), axis=0)
-                new_arr[i*2+1, j*2] = temp_arr/len(temp_arr)
-
-                temp_arr = np.sum((
+                new_arr[i*2, j*2+1] = np.average((
                     arr[i-(i>0), j+(j<max_j)],
                     arr[i, j+(j<max_j)],
                     arr[i-(i>0), j],
-                    arr[i, j]*4
+                    arr[i, j], arr[i, j],arr[i, j],arr[i, j],
                 ), axis=0)
-                new_arr[i*2, j*2+1] = temp_arr/len(temp_arr)
-
-                temp_arr = np.sum((
+                new_arr[i*2+1, j*2+1] = np.average((
                     arr[i+(i<max_i), j+(j<max_j)],
                     arr[i, j+(j<max_j)],
                     arr[i+(i<max_i), j],
-                    arr[i, j]*4
+                    arr[i, j],arr[i, j],arr[i, j],arr[i, j],
                 ), axis=0)
-                new_arr[i*2+1, j*2+1] = temp_arr/len(temp_arr)
-        
+
+        for i in range(len(new_arr)):
+            for j in range(len(new_arr[0])):
+                for x,color in enumerate(new_arr[i,j]):
+                    # Increse the contrast
+                    new_arr[i,j,x] = int(color*1.5)
+
         img = Image.fromarray(new_arr)
 
     Image.fromarray(new_arr).save(f"output/{init_res}-{img.size[0]}.jpg")
 
 #-------------------------------------------------------------------------------
-
-cool_error("tests/img1/64.jpg", 4096)
+startTime = time.time()
+cool_error("tests/img1/64.jpg", 1024)
+print(f'Done in: {round(time.time() - startTime,4)}s')
