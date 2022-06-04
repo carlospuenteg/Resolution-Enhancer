@@ -38,25 +38,25 @@ def enhance(path, res):
                     arr[i-(i>0),j-(j>0)],
                     arr[i, j-(j>0)], 
                     arr[i-(i>0), j], 
-                    arr[i, j],arr[i, j],arr[i, j],
+                    arr[i, j],arr[i, j],arr[i, j],arr[i, j],
                 ), axis=0)
                 new_arr[i*2+1, j*2] = np.average((
                     arr[i+(i<max_i), j-(j>0)],
                     arr[i, j-(j>0)],
                     arr[i+(i<max_i), j],
-                    arr[i, j],arr[i, j],arr[i, j],
+                    arr[i, j],arr[i, j],arr[i, j],arr[i, j],
                 ), axis=0)
                 new_arr[i*2, j*2+1] = np.average((
                     arr[i-(i>0), j+(j<max_j)],
                     arr[i, j+(j<max_j)], 
                     arr[i-(i>0), j], 
-                    arr[i, j], arr[i, j],arr[i, j],
+                    arr[i, j], arr[i, j],arr[i, j],arr[i, j],
                 ), axis=0)
                 new_arr[i*2+1, j*2+1] = np.average((
                     arr[i+(i<max_i), j+(j<max_j)],
                     arr[i, j+(j<max_j)], 
                     arr[i+(i<max_i), j], 
-                    arr[i, j],arr[i, j],arr[i, j],
+                    arr[i, j],arr[i, j],arr[i, j],arr[i, j],
                 ), axis=0)
         
         img = Image.fromarray(new_arr)
